@@ -12,7 +12,10 @@ const { HoldingsModel } = require('./models/HoldingsModel');
 const { PositionsModel } = require('./models/PositionsModel');
 const { OrdersModel } = require('./models/OrdersModel');
 
-const { MONGO_URL, PORT } = process.env;
+const PORT=process.env.PORT ||5000;
+const uri=process.env.MONGO_URL;
+
+
 
 const app = express();
 
@@ -220,11 +223,10 @@ app.post("/newOrder", async (req, res) => {
     res.send("Order saved!");
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
 
-    mongoose
-        .connect(MONGO_URL)
-        .then(() => console.log("MongoDB is  connected successfully"))
-        .catch((err) => console.error(err));
+app.listen(PORT, () => {
+  console.log("App started!");
+    mongoose.connect(uri);
+  
+  console.log("DB started!");
 });
